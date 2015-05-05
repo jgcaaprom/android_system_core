@@ -63,15 +63,6 @@ struct selabel_handle *sehandle_prop;
 
 static int property_triggers_enabled = 0;
 
-#if BOOTCHART
-static int   bootchart_count;
-#endif
-
-#ifndef BOARD_CHARGING_CMDLINE_NAME
-#define BOARD_CHARGING_CMDLINE_NAME "androidboot.battchg_pause"
-#define BOARD_CHARGING_CMDLINE_VALUE "true"
-#endif
-
 static char console[32];
 static char bootmode[32];
 static char hardware[32];
@@ -853,21 +844,6 @@ static int queue_property_triggers_action(int nargs, char **args)
     return 0;
 }
 
-#if BOOTCHART
-static int bootchart_init_action(int nargs, char **args)
-{
-    bootchart_count = bootchart_init();
-    if (bootchart_count < 0) {
-        ERROR("bootcharting init failure\n");
-    } else if (bootchart_count > 0) {
-        NOTICE("bootcharting started (period=%d ms)\n", bootchart_count*BOOTCHART_POLLING_MS);
-    } else {
-        NOTICE("bootcharting ignored\n");
-    }
-
-    return 0;
-}
-#endif
 
 static const struct selinux_opt seopts_prop[] = {
         { SELABEL_OPT_PATH, "/property_contexts" },
@@ -1142,11 +1118,6 @@ int main(int argc, char **argv)
     }
     /* run all property triggers based on current state of the properties */
     queue_builtin_action(queue_property_triggers_action, "queue_property_triggers");
-
-
-#if BOOTCHART
-    queue_builtin_action(bootchart_init_action, "bootchart_init");
-#endif
 
     for(;;) {
         int nr, i, timeout = -1;
