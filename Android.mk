@@ -20,3 +20,4 @@ include $(call first-makefiles-under,$(LOCAL_PATH))
 LOCAL_CC  := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-5.1/bin/arm-linux-androideabi-gcc$$(HOST_EXECUTABLE_SUFFIX)
 LOCAL_CXX := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-5.1/bin/arm-linux-androideabi-g++$$(HOST_EXECUTABLE_SUFFIX)
 
+LOCAL_CPPFLAGS := -std=gnu++11
