@@ -93,7 +93,6 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := r.c
 LOCAL_CFLAGS += $(common_cflags)
 LOCAL_MODULE := r
-LOCAL_MODULE_TAGS := debug
 include $(BUILD_EXECUTABLE)
 
 
